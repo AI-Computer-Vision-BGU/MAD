@@ -24,3 +24,7 @@ yarn-error.log*
 *.tmp
 *.temp
 
+# Documentation (keep local only, except README.md)
+*.md
+!README.md
+
