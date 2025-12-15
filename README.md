@@ -2,3 +2,6 @@
 
 Project page for the Maintenance Actions Dataset (MAD) - an egocentric video dataset for maintenance and repair actions.
 
+
+
+Web page can be found here `https://ai-computer-vision-bgu.github.io/MAD/`
