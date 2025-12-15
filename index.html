@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAD - Maintenance Actions Dataset</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🔧</span>
+                <span class="logo-text">MAD</span>
+            </a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#stats" class="nav-link">Stats</a></li>
+                <li><a href="#download" class="nav-link">Download</a></li>
+                <li><a href="#benchmark" class="nav-link">Benchmark</a></li>
+                <li><a href="#team" class="nav-link">Team</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero">
+        <div class="hero-video-wall">
+            <div class="video-grid">
+                <div class="video-cell" style="background: linear-gradient(45deg, #1a1a2e, #16213e);"></div>
+                <div class="video-cell" style="background: linear-gradient(45deg, #16213e, #0f3460);"></div>
+                <div class="video-cell" style="background: linear-gradient(45deg, #0f3460, #1a1a2e);"></div>
+                <div class="video-cell" style="background: linear-gradient(45deg, #e94560, #0f3460);"></div>
+                <div class="video-cell" style="background: linear-gradient(45deg, #1a1a2e, #e94560);"></div>
+            </div>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-main">MAINTENANCE</span>
+                <span class="title-sub">ACTIONS DATASET</span>
+            </h1>
+            <p class="hero-tagline">The first large-scale egocentric dataset for maintenance and repair actions</p>
+            <div class="hero-badges">
+                <span class="badge">Egocentric Vision</span>
+                <span class="badge">Industrial Maintenance</span>
+                <span class="badge">Action Recognition</span>
+            </div>
+            <a href="#download" class="cta-button">
+                <span>Download Dataset</span>
+                <i class="fas fa-arrow-down"></i>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </header>
+
+    <!-- News Section -->
+    <section class="section news-section" id="news">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">News</h2>
+                <div class="title-accent"></div>
+            </div>
+            <div class="news-grid">
+                <div class="news-card featured">
+                    <div class="news-date">Dec 2024</div>
+                    <div class="news-content">
+                        <h3>Dataset Released!</h3>
+                        <p>MAD dataset is now publicly available for research purposes.</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-date">Nov 2024</div>
+                    <div class="news-content">
+                        <h3>Paper Accepted</h3>
+                        <p>Our paper has been accepted at [Conference Name].</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-date">Oct 2024</div>
+                    <div class="news-content">
+                        <h3>Benchmark Released</h3>
+                        <p>Evaluation server and baselines are now available.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-main">
+                    <div class="section-header left">
+                        <h2 class="section-title">What is MAD?</h2>
+                        <div class="title-accent"></div>
+                    </div>
+                    <p class="about-description">
+                        The <strong>Maintenance Actions Dataset (MAD)</strong> is a large-scale egocentric video dataset 
+                        capturing real-world maintenance and repair activities. Recorded from a first-person perspective 
+                        using head-mounted cameras, MAD provides a unique window into procedural tasks performed by 
+                        technicians in various maintenance scenarios.
+                    </p>
+                    <p class="about-description">
+                        Unlike existing egocentric datasets that focus on daily activities or cooking, MAD specifically 
+                        targets the industrial maintenance domain, featuring complex tool usage, multi-step procedures, 
+                        and fine-grained hand-object interactions.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <h3 class="stats-header">Dataset Highlights</h3>
+                    <div class="stat-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-video"></i></div>
+                            <div class="stat-number" data-target="100">0</div>
+                            <div class="stat-label">Hours of Video</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-film"></i></div>
+                            <div class="stat-number" data-target="1000">0</div>
+                            <div class="stat-label">Action Segments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-user"></i></div>
+                            <div class="stat-number" data-target="50">0</div>
+                            <div class="stat-label">Participants</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-tags"></i></div>
+                            <div class="stat-number" data-target="150">0</div>
+                            <div class="stat-label">Action Classes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Characteristics Section -->
+    <section class="section characteristics-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Characteristics</h2>
+                <div class="title-accent"></div>
+            </div>
+            <div class="characteristics-grid">
+                <div class="char-card">
+                    <div class="char-icon">
+                        <i class="fas fa-glasses"></i>
+                    </div>
+                    <h3>Head-Mounted Camera</h3>
+                    <p>First-person perspective capturing the technician's viewpoint during maintenance tasks.</p>
+                </div>
+                <div class="char-card">
+                    <div class="char-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Tool Interactions</h3>
+                    <p>Rich annotations of tool usage and hand-object interactions in maintenance scenarios.</p>
+                </div>
+                <div class="char-card">
+                    <div class="char-icon">
+                        <i class="fas fa-list-ol"></i>
+                    </div>
+                    <h3>Procedural Tasks</h3>
+                    <p>Multi-step procedures with temporal ordering and hierarchical action structure.</p>
+                </div>
+                <div class="char-card">
+                    <div class="char-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Industrial Domain</h3>
+                    <p>Real maintenance scenarios including assembly, repair, and inspection tasks.</p>
+                </div>
+                <div class="char-card">
+                    <div class="char-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Temporal Annotations</h3>
+                    <p>Dense frame-level annotations with action start/end times and verb-noun labels.</p>
+                </div>
+                <div class="char-card">
+                    <div class="char-icon">
+                        <i class="fas fa-hd"></i>
+                    </div>
+                    <h3>High Resolution</h3>
+                    <p>Full HD recordings at high frame rate for detailed action analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats/Figures Section -->
+    <section class="section stats-section" id="stats">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Dataset Statistics</h2>
+                <div class="title-accent"></div>
+            </div>
+            <div class="stats-figures">
+                <div class="figure-placeholder">
+                    <div class="figure-icon"><i class="fas fa-chart-pie"></i></div>
+                    <p>Action Distribution Chart</p>
+                    <span class="figure-note">Add your visualization here</span>
+                </div>
+                <div class="figure-placeholder">
+                    <div class="figure-icon"><i class="fas fa-chart-bar"></i></div>
+                    <p>Verb-Noun Distribution</p>
+                    <span class="figure-note">Add your visualization here</span>
+                </div>
+                <div class="figure-placeholder">
+                    <div class="figure-icon"><i class="fas fa-project-diagram"></i></div>
+                    <p>Annotation Pipeline</p>
+                    <span class="figure-note">Add your visualization here</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section download-section" id="download">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Download</h2>
+                <div class="title-accent"></div>
+            </div>
+            <div class="download-content">
+                <div class="download-notice">
+                    <i class="fas fa-info-circle"></i>
+                    <p>The dataset is available for academic research purposes. Please read and agree to the terms of use before downloading.</p>
+                </div>
+                
+                <div class="download-grid">
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Video Data</h3>
+                        <p>Full resolution RGB videos</p>
+                        <div class="download-meta">
+                            <span><i class="fas fa-database"></i> ~XXX GB</span>
+                        </div>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                    
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3>Annotations</h3>
+                        <p>Action segments, labels, splits</p>
+                        <div class="download-meta">
+                            <span><i class="fas fa-database"></i> ~XX MB</span>
+                        </div>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                    
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <h3>Code & Tools</h3>
+                        <p>Data loaders, evaluation scripts</p>
+                        <div class="download-meta">
+                            <span><i class="fas fa-code-branch"></i> GitHub</span>
+                        </div>
+                        <a href="https://github.com/AI-Computer-Vision-BGU/MAD" class="download-btn" target="_blank">
+                            <i class="fab fa-github"></i> Repository
+                        </a>
+                    </div>
+                </div>
+
+                <div class="annotations-section">
+                    <h3>Annotations Repository</h3>
+                    <p>All annotations (Train/Val/Test splits) are available at our GitHub repository:</p>
+                    <a href="https://github.com/AI-Computer-Vision-BGU/MAD-annotations" class="repo-link" target="_blank">
+                        <i class="fab fa-github"></i> MAD-annotations
+                    </a>
+                </div>
+
+                <div class="citation-section">
+                    <h3>Citation</h3>
+                    <p>If you use this dataset, please cite our paper:</p>
+                    <div class="citation-box">
+                        <pre><code>@article{author2024mad,
+    title={MAD: Maintenance Actions Dataset for Egocentric Video Understanding},
+    author={Author Name and Co-Author Name},
+    journal={Conference/Journal Name},
+    year={2024}
+}</code></pre>
+                        <button class="copy-btn" onclick="copyBibtex()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benchmark Section -->
+    <section class="section benchmark-section" id="benchmark">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Benchmark</h2>
+                <div class="title-accent"></div>
+            </div>
+            
+            <div class="benchmark-intro">
+                <p>We provide several benchmark tasks for evaluating methods on MAD:</p>
+            </div>
+
+            <div class="benchmark-grid">
+                <div class="benchmark-card">
+                    <div class="benchmark-header">
+                        <h3>Action Recognition</h3>
+                        <span class="task-badge">Task 1</span>
+                    </div>
+                    <div class="benchmark-body">
+                        <p><strong>Task:</strong> Assign a (verb, noun) label to a trimmed video segment.</p>
+                        <p><strong>Metrics:</strong> Top-1/5 accuracy for verb, noun, and action.</p>
+                    </div>
+                    <div class="benchmark-links">
+                        <a href="#" class="bench-link"><i class="fas fa-rocket"></i> Get Started</a>
+                        <a href="#" class="bench-link"><i class="fas fa-trophy"></i> Leaderboard</a>
+                    </div>
+                </div>
+
+                <div class="benchmark-card">
+                    <div class="benchmark-header">
+                        <h3>Action Detection</h3>
+                        <span class="task-badge">Task 2</span>
+                    </div>
+                    <div class="benchmark-body">
+                        <p><strong>Task:</strong> Detect action start/end times in untrimmed videos.</p>
+                        <p><strong>Metrics:</strong> Mean Average Precision (mAP) @ various IoU thresholds.</p>
+                    </div>
+                    <div class="benchmark-links">
+                        <a href="#" class="bench-link"><i class="fas fa-rocket"></i> Get Started</a>
+                        <a href="#" class="bench-link"><i class="fas fa-trophy"></i> Leaderboard</a>
+                    </div>
+                </div>
+
+                <div class="benchmark-card">
+                    <div class="benchmark-header">
+                        <h3>Action Anticipation</h3>
+                        <span class="task-badge">Task 3</span>
+                    </div>
+                    <div class="benchmark-body">
+                        <p><strong>Task:</strong> Predict the next action before it starts.</p>
+                        <p><strong>Metrics:</strong> Top-5 recall at various anticipation times.</p>
+                    </div>
+                    <div class="benchmark-links">
+                        <a href="#" class="bench-link"><i class="fas fa-rocket"></i> Get Started</a>
+                        <a href="#" class="bench-link"><i class="fas fa-trophy"></i> Leaderboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section team-section" id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">The Team</h2>
+                <div class="title-accent"></div>
+            </div>
+            <div class="team-intro">
+                <p>We are researchers from the <a href="https://www.cs.bgu.ac.il/" target="_blank">Department of Computer Science</a> at <a href="https://www.bgu.ac.il/" target="_blank">Ben-Gurion University of the Negev</a>.</p>
+            </div>
+            
+            <div class="team-grid">
+                <!-- Principal Investigators -->
+                <div class="team-member pi">
+                    <div class="member-photo">
+                        <img src="assets/team/placeholder.jpg" alt="PI Name" onerror="this.src='https://via.placeholder.com/200?text=Photo'">
+                    </div>
+                    <div class="member-info">
+                        <h3>PI Name</h3>
+                        <span class="member-role">Principal Investigator</span>
+                        <span class="member-affiliation">Ben-Gurion University</span>
+                        <div class="member-links">
+                            <a href="#"><i class="fas fa-globe"></i></a>
+                            <a href="#"><i class="fab fa-google-scholar"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Members -->
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="assets/team/placeholder.jpg" alt="Team Member 1" onerror="this.src='https://via.placeholder.com/200?text=Photo'">
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 1</h3>
+                        <span class="member-role">PhD Student</span>
+                        <span class="member-affiliation">Ben-Gurion University</span>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="assets/team/placeholder.jpg" alt="Team Member 2" onerror="this.src='https://via.placeholder.com/200?text=Photo'">
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 2</h3>
+                        <span class="member-role">PhD Student</span>
+                        <span class="member-affiliation">Ben-Gurion University</span>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="assets/team/placeholder.jpg" alt="Team Member 3" onerror="this.src='https://via.placeholder.com/200?text=Photo'">
+                    </div>
+                    <div class="member-info">
+                        <h3>Team Member 3</h3>
+                        <span class="member-role">MSc Student</span>
+                        <span class="member-affiliation">Ben-Gurion University</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="funding-section">
+                <h3>Research Funding</h3>
+                <p>This research was supported by:</p>
+                <ul class="funding-list">
+                    <li>Funding Source 1</li>
+                    <li>Funding Source 2</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🔧</span>
+                    <span class="logo-text">MAD</span>
+                    <p>Maintenance Actions Dataset</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/AI-Computer-Vision-BGU" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="mailto:your-email@bgu.ac.il">
+                        <i class="fas fa-envelope"></i> Contact
+                    </a>
+                </div>
+                <div class="footer-license">
+                    <img src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" alt="CC BY-NC 4.0">
+                    <p>Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI-Computer-Vision-BGU. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
