@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initStatCounter();
     initScrollAnimations();
     initScrollSpy();
+    initHeroVideoCarousel();
 });
 
 // ============================================
@@ -244,7 +245,81 @@ function initScrollSpy() {
 }
 
 // ============================================
-// Video Wall Animation (if videos are added)
+// Hero Video Carousel - Cycles Through Dataset Videos
+// ============================================
+function initHeroVideoCarousel() {
+    const videoElement = document.getElementById('hero-video');
+    
+    if (!videoElement) return;
+    
+    // List your video files here (add them to assets/videos/ folder)
+    const videos = [
+        'assets/videos/GH010195.MP4',
+        'assets/videos/GH012499.MP4',
+        'assets/videos/GH013456.MP4',
+        'assets/videos/GH013926.MP4',
+        'assets/videos/GH016142(1).MP4',
+        'assets/videos/GH016196.MP4',
+        'assets/videos/GH016242.MP4',
+        'assets/videos/GH016282.MP4',
+        'assets/videos/GH017494.MP4',
+        'assets/videos/GOPR4110.MP4',
+        'assets/videos/plier.MP4',
+        'assets/videos/screwdriver(1).MP4',
+        'assets/videos/uncover2hands.MP4'
+    ];
+    
+    let currentVideoIndex = 0;
+    
+    // Function to load and play a video
+    function loadVideo(index) {
+        // Fade out
+        videoElement.classList.add('fade-out');
+        
+        setTimeout(() => {
+            // Change video source
+            videoElement.src = videos[index];
+            videoElement.load();
+            
+            // Play and fade in
+            videoElement.play().then(() => {
+                videoElement.classList.remove('fade-out');
+            }).catch(err => {
+                console.log('Video play error:', err);
+                // If video fails, try next one
+                nextVideo();
+            });
+        }, 500); // Wait for fade out
+    }
+    
+    // Function to move to next video
+    function nextVideo() {
+        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+        loadVideo(currentVideoIndex);
+    }
+    
+    // Load first video
+    loadVideo(0);
+    
+    // When video ends, move to next one
+    videoElement.addEventListener('ended', () => {
+        console.log('Video ended, moving to next');
+        nextVideo();
+    });
+    
+    // Fallback: Also change video every 4 seconds in case 'ended' event doesn't fire
+    setInterval(() => {
+        console.log('Timer triggered, moving to next video');
+        nextVideo();
+    }, 4000);
+    
+    // Optional: Auto-advance every 10 seconds (even if video is longer)
+    // Uncomment if you want videos to change every X seconds regardless of length
+    // setInterval(nextVideo, 10000);
+}
+
+// ============================================
+// Video Wall Animation (Legacy - if needed)
 // ============================================
 function initVideoWall() {
     const cells = document.querySelectorAll('.video-cell');
