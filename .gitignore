@@ -28,3 +28,5 @@ yarn-error.log*
 *.md
 !README.md
 
+
+*.sh
