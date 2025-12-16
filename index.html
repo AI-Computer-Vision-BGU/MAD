@@ -37,8 +37,8 @@
     <!-- Hero Section -->
     <header class="hero" id="hero">
         <div class="hero-video-wall">
-            <video id="hero-video" autoplay muted loop playsinline preload="auto" webkit-playsinline src="assets/videos/GH010195.MP4">
-                <source src="assets/videos/GH010195.MP4" type="video/mp4">
+            <video id="hero-video" autoplay muted loop playsinline preload="metadata" webkit-playsinline>
+                <source src="assets/videos/GH010195_web.mp4" type="video/mp4">
             </video>
             <div class="hero-overlay"></div>
         </div>
@@ -240,33 +240,17 @@
             <!-- Filter Controls -->
             <div class="explore-controls">
                 <div class="filter-group">
-                    <label>Action Type:</label>
-                    <select id="filter-action" class="filter-select">
-                        <option value="all">All Actions</option>
-                        <option value="assemble">Assemble</option>
-                        <option value="disassemble">Disassemble</option>
-                        <option value="inspect">Inspect</option>
-                        <option value="repair">Repair</option>
-                        <option value="clean">Clean</option>
-                        <option value="measure">Measure</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Object:</label>
-                    <select id="filter-object" class="filter-select">
-                        <option value="all">All Objects</option>
-                        <option value="tool">Tools</option>
-                        <option value="part">Parts</option>
-                        <option value="machine">Machines</option>
-                        <option value="fastener">Fasteners</option>
+                    <label>Category:</label>
+                    <select id="filter-category" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <!-- Populated dynamically -->
                     </select>
                 </div>
                 <div class="filter-group">
                     <label>Annotation:</label>
                     <select id="filter-annotation" class="filter-select">
-                        <option value="bbox">Bounding Boxes</option>
                         <option value="segmentation">Segmentation</option>
-                        <option value="hands">Hand Keypoints</option>
+                        <option value="bbox">Bounding Boxes</option>
                         <option value="none">No Overlay</option>
                     </select>
                 </div>
@@ -302,20 +286,16 @@
                     <h4>Metadata</h4>
                     <div id="image-metadata" class="metadata-panel">
                         <div class="meta-item">
-                            <span class="meta-label">Video ID:</span>
-                            <span class="meta-value" id="meta-video">-</span>
+                            <span class="meta-label">Image ID:</span>
+                            <span class="meta-value" id="meta-id">-</span>
                         </div>
                         <div class="meta-item">
-                            <span class="meta-label">Frame:</span>
-                            <span class="meta-value" id="meta-frame">-</span>
+                            <span class="meta-label">Filename:</span>
+                            <span class="meta-value" id="meta-filename">-</span>
                         </div>
                         <div class="meta-item">
-                            <span class="meta-label">Action:</span>
-                            <span class="meta-value" id="meta-action">-</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Participant:</span>
-                            <span class="meta-value" id="meta-participant">-</span>
+                            <span class="meta-label">Size:</span>
+                            <span class="meta-value" id="meta-size">-</span>
                         </div>
                     </div>
                 </div>

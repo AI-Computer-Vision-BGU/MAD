@@ -261,19 +261,19 @@ function initHeroVideoCarousel() {
     
     // List your video files here (add them to assets/videos/ folder)
     const videos = [
-        'assets/videos/GH010195.MP4',
-        'assets/videos/GH012499.MP4',
-        'assets/videos/GH013456.MP4',
-        'assets/videos/GH013926.MP4',
-        'assets/videos/GH016142%281%29.MP4',  // URL encoded parentheses
-        'assets/videos/GH016196.MP4',
-        'assets/videos/GH016242.MP4',
-        'assets/videos/GH016282.MP4',
-        'assets/videos/GH017494.MP4',
-        'assets/videos/GOPR4110.MP4',
-        'assets/videos/plier.MP4',
-        'assets/videos/screwdriver%281%29.MP4',  // URL encoded parentheses
-        'assets/videos/uncover2hands.MP4'
+        'assets/videos/GH010195_web.mp4',
+        'assets/videos/GH012499_web.mp4',
+        'assets/videos/GH013456_web.mp4',
+        'assets/videos/GH013926_web.mp4',
+        'assets/videos/GH016142%281%29_web.mp4',  // URL encoded parentheses
+        'assets/videos/GH016196_web.mp4',
+        'assets/videos/GH016242_web.mp4',
+        'assets/videos/GH016282_web.mp4',
+        'assets/videos/GH017494_web.mp4',
+        'assets/videos/GOPR4110_web.mp4',
+        'assets/videos/plier_web.mp4',
+        'assets/videos/screwdriver%281%29_web.mp4',  // URL encoded parentheses
+        'assets/videos/uncover2hands_web.mp4'
     ];
     
     let currentVideoIndex = 0;
@@ -294,7 +294,7 @@ function initHeroVideoCarousel() {
             videoElement.muted = true;
             videoElement.playsInline = true;
             videoElement.loop = false; // We handle looping manually
-            videoElement.preload = 'auto';
+            videoElement.preload = 'metadata';
             videoElement.setAttribute('playsinline', '');
             videoElement.setAttribute('webkit-playsinline', '');
 
@@ -374,7 +374,7 @@ function initVideoWall() {
 }
 
 // ============================================
-// Explorer Section - Dataset Visualization
+// Explorer Section - Dataset Visualization (COCO Format)
 // ============================================
 function initExplorer() {
     const randomBtn = document.getElementById('explore-random');
@@ -384,87 +384,113 @@ function initExplorer() {
     const exploreImage = document.getElementById('explore-image');
     const annotationCanvas = document.getElementById('annotation-canvas');
     const imageCounter = document.getElementById('image-counter');
-    const filterAction = document.getElementById('filter-action');
-    const filterObject = document.getElementById('filter-object');
+    const filterCategory = document.getElementById('filter-category');
     const filterAnnotation = document.getElementById('filter-annotation');
     const annotationList = document.getElementById('annotation-list');
     const galleryGrid = document.getElementById('gallery-grid');
     
-    // If explore elements don't exist, skip initialization
     if (!randomBtn) return;
     
     // State
+    let cocoData = null;
+    let categories = {};
+    let annotationsByImage = {};
     let currentImages = [];
     let currentIndex = 0;
-    let annotations = {};
     
-    // Sample data structure (replace with actual data loading)
-    // This is the infrastructure - you'll connect this to your actual data
-    const sampleData = {
-        images: [
-            // Example structure:
-            // {
-            //     id: 'frame_001',
-            //     url: 'assets/explore/frame_001.jpg',
-            //     video_id: 'GH010195',
-            //     frame_num: 1234,
-            //     action: 'assemble',
-            //     participant: 'P01',
-            //     annotations: [
-            //         { type: 'bbox', label: 'screwdriver', coords: [100, 150, 200, 300], color: '#E94560' },
-            //         { type: 'bbox', label: 'hand_left', coords: [250, 200, 350, 400], color: '#00D9FF' }
-            //     ]
-            // }
-        ]
-    };
+    // Color palette for categories
+    const colors = [
+        '#E94560', '#00D9FF', '#4CAF50', '#FF9800', '#9C27B0',
+        '#00BCD4', '#FFEB3B', '#795548', '#607D8B', '#E91E63',
+        '#3F51B5', '#8BC34A', '#FF5722', '#673AB7', '#009688'
+    ];
     
-    // Function to load data (placeholder - implement your data fetching logic)
+    // Load COCO format data
     async function loadExplorerData() {
-        // TODO: Implement actual data loading
-        // Options:
-        // 1. Load from JSON file: fetch('assets/explore/annotations.json')
-        // 2. Load from external API
-        // 3. Load from static JS file with data
+        if (cocoData) return cocoData;
         
-        console.log('Explorer: Data loading not yet implemented');
-        return sampleData;
+        try {
+            const response = await fetch('assets/explore/annotations_sample.json');
+            cocoData = await response.json();
+            
+            // Build category lookup
+            cocoData.categories.forEach((cat, i) => {
+                categories[cat.id] = {
+                    ...cat,
+                    color: colors[i % colors.length]
+                };
+            });
+            
+            // Build annotations by image lookup
+            cocoData.annotations.forEach(anno => {
+                if (!annotationsByImage[anno.image_id]) {
+                    annotationsByImage[anno.image_id] = [];
+                }
+                annotationsByImage[anno.image_id].push(anno);
+            });
+            
+            // Populate category filter
+            populateCategoryFilter();
+            
+            console.log('Explorer: Loaded', cocoData.images.length, 'images');
+            return cocoData;
+        } catch (err) {
+            console.error('Explorer: Failed to load data', err);
+            return null;
+        }
     }
     
-    // Function to filter images based on current selections
-    function filterImages(data) {
-        const actionFilter = filterAction.value;
-        const objectFilter = filterObject.value;
-        
-        return data.images.filter(img => {
-            const actionMatch = actionFilter === 'all' || img.action === actionFilter;
-            const objectMatch = objectFilter === 'all' || img.annotations?.some(a => a.category === objectFilter);
-            return actionMatch && objectMatch;
+    function populateCategoryFilter() {
+        filterCategory.innerHTML = '<option value="all">All Categories</option>';
+        cocoData.categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            option.textContent = cat.name;
+            filterCategory.appendChild(option);
         });
     }
     
-    // Function to display an image with annotations
+    function filterImages() {
+        const categoryFilter = filterCategory.value;
+        
+        if (categoryFilter === 'all') {
+            return [...cocoData.images];
+        }
+        
+        // Filter images that have annotations with this category
+        const catId = parseInt(categoryFilter);
+        return cocoData.images.filter(img => {
+            const annos = annotationsByImage[img.id] || [];
+            return annos.some(a => a.category_id === catId);
+        });
+    }
+    
     function displayImage(imageData) {
         if (!imageData) return;
         
-        // Hide placeholder
         const placeholder = imageContainer.querySelector('.placeholder-message');
         if (placeholder) placeholder.style.display = 'none';
         
-        // Show image
-        exploreImage.src = imageData.url;
+        // Build image URL (use images_sample for web demo)
+        const imageUrl = `assets/explore/images_sample/${imageData.file_name}`;
+        exploreImage.src = imageUrl;
         exploreImage.style.display = 'block';
         
         // Update metadata
-        document.getElementById('meta-video').textContent = imageData.video_id || '-';
-        document.getElementById('meta-frame').textContent = imageData.frame_num || '-';
-        document.getElementById('meta-action').textContent = imageData.action || '-';
-        document.getElementById('meta-participant').textContent = imageData.participant || '-';
+        document.getElementById('meta-id').textContent = imageData.id;
+        document.getElementById('meta-filename').textContent = imageData.file_name;
+        document.getElementById('meta-size').textContent = `${imageData.width} × ${imageData.height}`;
         
-        // Draw annotations
-        drawAnnotations(imageData.annotations || []);
+        // Get annotations for this image
+        const imageAnnotations = annotationsByImage[imageData.id] || [];
+        
+        // Draw annotations when image loads
+        exploreImage.onload = () => {
+            drawAnnotations(imageAnnotations, imageData);
+        };
         
         // Update annotation list
-        updateAnnotationList(imageData.annotations || []);
+        updateAnnotationList(imageAnnotations);
         
         // Update counter
         imageCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
@@ -474,77 +500,79 @@ function initExplorer() {
         nextBtn.disabled = currentIndex === currentImages.length - 1;
     }
     
-    // Function to draw annotations on canvas
-    function drawAnnotations(annotations) {
+    function drawAnnotations(annotations, imageData) {
         const ctx = annotationCanvas.getContext('2d');
         const annotationType = filterAnnotation.value;
         
-        // Clear canvas
+        // Match canvas to displayed image size
+        annotationCanvas.width = exploreImage.offsetWidth;
+        annotationCanvas.height = exploreImage.offsetHeight;
+        
         ctx.clearRect(0, 0, annotationCanvas.width, annotationCanvas.height);
         
         if (annotationType === 'none') return;
         
-        // Wait for image to load to get dimensions
-        exploreImage.onload = () => {
-            annotationCanvas.width = exploreImage.offsetWidth;
-            annotationCanvas.height = exploreImage.offsetHeight;
+        const scaleX = exploreImage.offsetWidth / imageData.width;
+        const scaleY = exploreImage.offsetHeight / imageData.height;
+        
+        annotations.forEach(anno => {
+            const cat = categories[anno.category_id] || { name: 'unknown', color: '#E94560' };
             
-            const scaleX = exploreImage.offsetWidth / exploreImage.naturalWidth;
-            const scaleY = exploreImage.offsetHeight / exploreImage.naturalHeight;
-            
-            annotations.forEach(anno => {
-                if (anno.type === 'bbox' && annotationType === 'bbox') {
-                    drawBoundingBox(ctx, anno, scaleX, scaleY);
-                } else if (anno.type === 'segmentation' && annotationType === 'segmentation') {
-                    drawSegmentation(ctx, anno, scaleX, scaleY);
-                } else if (anno.type === 'keypoints' && annotationType === 'hands') {
-                    drawKeypoints(ctx, anno, scaleX, scaleY);
-                }
-            });
-        };
+            if (annotationType === 'segmentation' && anno.segmentation && anno.segmentation.length > 0) {
+                drawSegmentation(ctx, anno.segmentation, cat, scaleX, scaleY);
+            } else if (annotationType === 'bbox' && anno.bbox && anno.bbox.length === 4) {
+                drawBoundingBox(ctx, anno.bbox, cat, scaleX, scaleY);
+            }
+        });
     }
     
-    function drawBoundingBox(ctx, anno, scaleX, scaleY) {
-        const [x, y, w, h] = anno.coords;
-        ctx.strokeStyle = anno.color || '#E94560';
+    function drawBoundingBox(ctx, bbox, cat, scaleX, scaleY) {
+        const [x, y, w, h] = bbox;
+        ctx.strokeStyle = cat.color;
         ctx.lineWidth = 3;
         ctx.strokeRect(x * scaleX, y * scaleY, w * scaleX, h * scaleY);
         
-        // Label
-        ctx.fillStyle = anno.color || '#E94560';
-        ctx.font = 'bold 14px Inter, sans-serif';
-        ctx.fillText(anno.label, x * scaleX, y * scaleY - 5);
+        // Label background
+        ctx.fillStyle = cat.color;
+        const labelText = cat.name;
+        ctx.font = 'bold 12px Inter, sans-serif';
+        const textWidth = ctx.measureText(labelText).width;
+        ctx.fillRect(x * scaleX, y * scaleY - 18, textWidth + 8, 18);
+        
+        // Label text
+        ctx.fillStyle = 'white';
+        ctx.fillText(labelText, x * scaleX + 4, y * scaleY - 5);
     }
     
-    function drawSegmentation(ctx, anno, scaleX, scaleY) {
-        if (!anno.polygon) return;
-        
-        ctx.fillStyle = (anno.color || '#E94560') + '40'; // 25% opacity
-        ctx.strokeStyle = anno.color || '#E94560';
-        ctx.lineWidth = 2;
-        
-        ctx.beginPath();
-        anno.polygon.forEach((point, i) => {
-            if (i === 0) {
-                ctx.moveTo(point[0] * scaleX, point[1] * scaleY);
+    function drawSegmentation(ctx, segmentation, cat, scaleX, scaleY) {
+        segmentation.forEach(seg => {
+            // seg is array of points: [[x1,y1], [x2,y2], ...] or [x1,y1,x2,y2,...]
+            let points = [];
+            
+            if (Array.isArray(seg[0])) {
+                // Format: [[x1,y1], [x2,y2], ...]
+                points = seg;
             } else {
-                ctx.lineTo(point[0] * scaleX, point[1] * scaleY);
+                // Format: [x1,y1,x2,y2,...] - convert to pairs
+                for (let i = 0; i < seg.length; i += 2) {
+                    points.push([seg[i], seg[i + 1]]);
+                }
             }
-        });
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-    }
-    
-    function drawKeypoints(ctx, anno, scaleX, scaleY) {
-        if (!anno.keypoints) return;
-        
-        ctx.fillStyle = anno.color || '#00D9FF';
-        
-        anno.keypoints.forEach(kp => {
+            
+            if (points.length < 3) return;
+            
+            ctx.fillStyle = cat.color + '50'; // 30% opacity
+            ctx.strokeStyle = cat.color;
+            ctx.lineWidth = 2;
+            
             ctx.beginPath();
-            ctx.arc(kp.x * scaleX, kp.y * scaleY, 5, 0, Math.PI * 2);
+            ctx.moveTo(points[0][0] * scaleX, points[0][1] * scaleY);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i][0] * scaleX, points[i][1] * scaleY);
+            }
+            ctx.closePath();
             ctx.fill();
+            ctx.stroke();
         });
     }
     
@@ -554,38 +582,59 @@ function initExplorer() {
             return;
         }
         
-        annotationList.innerHTML = annotations.map(anno => `
-            <div class="annotation-item">
-                <span class="annotation-color" style="background-color: ${anno.color || '#E94560'}"></span>
-                <span>${anno.label}</span>
-                <span style="color: var(--gray); font-size: 0.8rem">${anno.type}</span>
-            </div>
-        `).join('');
+        annotationList.innerHTML = annotations.map(anno => {
+            const cat = categories[anno.category_id] || { name: 'unknown', color: '#E94560' };
+            return `
+                <div class="annotation-item">
+                    <span class="annotation-color" style="background-color: ${cat.color}"></span>
+                    <span>${cat.name}</span>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // Populate gallery with thumbnails
+    function populateGallery(images) {
+        galleryGrid.innerHTML = '';
+        const thumbs = images.slice(0, 6);
+        
+        thumbs.forEach((img, i) => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.innerHTML = `<img src="assets/explore/images_sample/${img.file_name}" alt="Sample ${i + 1}">`;
+            div.addEventListener('click', () => {
+                currentIndex = i;
+                displayImage(currentImages[currentIndex]);
+            });
+            galleryGrid.appendChild(div);
+        });
     }
     
     // Event Listeners
     randomBtn.addEventListener('click', async () => {
         const data = await loadExplorerData();
-        currentImages = filterImages(data);
-        
-        if (currentImages.length === 0) {
-            console.log('Explorer: No images match current filters (or no data loaded)');
-            // Show message
+        if (!data) {
             const placeholder = imageContainer.querySelector('.placeholder-message');
             if (placeholder) {
                 placeholder.innerHTML = `
                     <i class="fas fa-exclamation-circle"></i>
-                    <p>No images available yet</p>
-                    <span class="coming-soon">Add images to assets/explore/ and annotations.json</span>
+                    <p>Failed to load annotations</p>
                 `;
                 placeholder.style.display = 'block';
             }
             return;
         }
         
+        currentImages = filterImages();
+        
+        if (currentImages.length === 0) {
+            return;
+        }
+        
         // Random starting point
         currentIndex = Math.floor(Math.random() * currentImages.length);
         displayImage(currentImages[currentIndex]);
+        populateGallery(currentImages);
     });
     
     prevBtn.addEventListener('click', () => {
@@ -602,10 +651,23 @@ function initExplorer() {
         }
     });
     
-    // Re-draw annotations when filter changes
     filterAnnotation.addEventListener('change', () => {
         if (currentImages[currentIndex]) {
-            drawAnnotations(currentImages[currentIndex].annotations || []);
+            const imageData = currentImages[currentIndex];
+            const imageAnnotations = annotationsByImage[imageData.id] || [];
+            drawAnnotations(imageAnnotations, imageData);
+        }
+    });
+    
+    filterCategory.addEventListener('change', async () => {
+        const data = await loadExplorerData();
+        if (!data) return;
+        
+        currentImages = filterImages();
+        if (currentImages.length > 0) {
+            currentIndex = 0;
+            displayImage(currentImages[currentIndex]);
+            populateGallery(currentImages);
         }
     });
     

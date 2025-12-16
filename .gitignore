@@ -33,3 +33,11 @@ yarn-error.log*
 
 drawio/
 drawio/*.drawio
+
+# Large files (use sample/compressed versions for web)
+assets/explore/annotations.json
+assets/explore/images/
+
+# Original videos (keep only _web.mp4 compressed versions)
+assets/videos/*.mp4
+!assets/videos/*_web.mp4
