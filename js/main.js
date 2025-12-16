@@ -312,24 +312,25 @@ function initHeroVideoCarousel() {
         loadVideo(currentVideoIndex);
     }
     
-    // Load first video
-    loadVideo(0);
+    // Don't load first video - it's already set in HTML src attribute
+    // Just ensure it can play
+    videoElement.muted = true;
+    videoElement.play().catch(function(e) {
+        console.log('Initial play failed:', e);
+    });
     
     // When video ends, move to next one
-    videoElement.addEventListener('ended', () => {
+    videoElement.addEventListener('ended', function() {
         console.log('Video ended, moving to next');
         nextVideo();
     });
     
-    // Fallback: Also change video every 4 seconds in case 'ended' event doesn't fire
-    setInterval(() => {
-        console.log('Timer triggered, moving to next video');
+    // Change video every 4 seconds
+    setInterval(function() {
         nextVideo();
     }, 4000);
     
-    // Optional: Auto-advance every 10 seconds (even if video is longer)
-    // Uncomment if you want videos to change every X seconds regardless of length
-    // setInterval(nextVideo, 10000);
+    console.log('Hero video carousel initialized');
 }
 
 // ============================================
