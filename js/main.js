@@ -504,16 +504,22 @@ function initExplorer() {
         const ctx = annotationCanvas.getContext('2d');
         const annotationType = filterAnnotation.value;
         
-        // Match canvas to displayed image size
-        annotationCanvas.width = exploreImage.offsetWidth;
-        annotationCanvas.height = exploreImage.offsetHeight;
+        // Get the actual rendered size and position of the image
+        const imgRect = exploreImage.getBoundingClientRect();
+        const containerRect = imageContainer.getBoundingClientRect();
+        
+        // Position canvas exactly over the image
+        annotationCanvas.style.left = (imgRect.left - containerRect.left) + 'px';
+        annotationCanvas.style.top = (imgRect.top - containerRect.top) + 'px';
+        annotationCanvas.width = imgRect.width;
+        annotationCanvas.height = imgRect.height;
         
         ctx.clearRect(0, 0, annotationCanvas.width, annotationCanvas.height);
         
         if (annotationType === 'none') return;
         
-        const scaleX = exploreImage.offsetWidth / imageData.width;
-        const scaleY = exploreImage.offsetHeight / imageData.height;
+        const scaleX = imgRect.width / imageData.width;
+        const scaleY = imgRect.height / imageData.height;
         
         annotations.forEach(anno => {
             const cat = categories[anno.category_id] || { name: 'unknown', color: '#E94560' };
