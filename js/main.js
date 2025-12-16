@@ -273,22 +273,36 @@ function initHeroVideoCarousel() {
     
     // Function to load and play a video
     function loadVideo(index) {
+        console.log('Loading video:', videos[index]);
+        
         // Fade out
         videoElement.classList.add('fade-out');
         
         setTimeout(() => {
             // Change video source
             videoElement.src = videos[index];
+            
+            // Ensure video attributes are set
+            videoElement.muted = true;
+            videoElement.playsInline = true;
+            videoElement.setAttribute('playsinline', '');
+            videoElement.setAttribute('webkit-playsinline', '');
+            
             videoElement.load();
             
             // Play and fade in
-            videoElement.play().then(() => {
-                videoElement.classList.remove('fade-out');
-            }).catch(err => {
-                console.log('Video play error:', err);
-                // If video fails, try next one
-                nextVideo();
-            });
+            const playPromise = videoElement.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('Video playing successfully');
+                    videoElement.classList.remove('fade-out');
+                }).catch(err => {
+                    console.error('Video play error:', err, 'for video:', videos[index]);
+                    // If video fails, try next one after a delay
+                    setTimeout(nextVideo, 1000);
+                });
+            }
         }, 500); // Wait for fade out
     }
     
