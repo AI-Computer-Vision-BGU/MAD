@@ -4,4 +4,4 @@ Project page for the Maintenance Actions Dataset (MAD) - an egocentric video dat
 
 
 
-Web page can be found [HERE](https://github.com/AI-Computer-Vision-BGU/MAD)
+Web page can be found [HERE](https://ai-computer-vision-bgu.github.io/MAD/)

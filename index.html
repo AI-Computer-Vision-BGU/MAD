@@ -26,6 +26,7 @@
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#stats" class="nav-link">Stats</a></li>
+                <li><a href="#explore" class="nav-link">Explore</a></li>
                 <li><a href="#download" class="nav-link">Download</a></li>
                 <li><a href="#benchmark" class="nav-link">Benchmark</a></li>
                 <li><a href="#team" class="nav-link">Team</a></li>
@@ -127,8 +128,8 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-film"></i></div>
-                            <div class="stat-number" data-target="1000">0</div>
-                            <div class="stat-label">Action Segments</div>
+                            <div class="stat-number" data-target="20">0</div>
+                            <div class="stat-label">Million Frames</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-user"></i></div>
@@ -222,6 +223,127 @@
                     <div class="figure-icon"><i class="fas fa-project-diagram"></i></div>
                     <p>Annotation Pipeline</p>
                     <span class="figure-note">Add your visualization here</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Section -->
+    <section class="section explore-section" id="explore">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Explore</h2>
+                <div class="title-accent"></div>
+            </div>
+            <p class="explore-intro">Browse sample images from the MAD dataset with annotations. Use filters to explore specific actions, objects, or scenarios.</p>
+            
+            <!-- Filter Controls -->
+            <div class="explore-controls">
+                <div class="filter-group">
+                    <label>Action Type:</label>
+                    <select id="filter-action" class="filter-select">
+                        <option value="all">All Actions</option>
+                        <option value="assemble">Assemble</option>
+                        <option value="disassemble">Disassemble</option>
+                        <option value="inspect">Inspect</option>
+                        <option value="repair">Repair</option>
+                        <option value="clean">Clean</option>
+                        <option value="measure">Measure</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Object:</label>
+                    <select id="filter-object" class="filter-select">
+                        <option value="all">All Objects</option>
+                        <option value="tool">Tools</option>
+                        <option value="part">Parts</option>
+                        <option value="machine">Machines</option>
+                        <option value="fastener">Fasteners</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Annotation:</label>
+                    <select id="filter-annotation" class="filter-select">
+                        <option value="bbox">Bounding Boxes</option>
+                        <option value="segmentation">Segmentation</option>
+                        <option value="hands">Hand Keypoints</option>
+                        <option value="none">No Overlay</option>
+                    </select>
+                </div>
+                <button id="explore-random" class="explore-btn">
+                    <i class="fas fa-random"></i> Random Sample
+                </button>
+            </div>
+
+            <!-- Image Viewer -->
+            <div class="explore-viewer">
+                <div class="viewer-main">
+                    <div class="image-container" id="explore-image-container">
+                        <div class="placeholder-message">
+                            <i class="fas fa-images"></i>
+                            <p>Select filters and click "Random Sample" to explore the dataset</p>
+                            <span class="coming-soon">Full explorer coming soon!</span>
+                        </div>
+                        <!-- Canvas for annotations will be inserted here -->
+                        <canvas id="annotation-canvas"></canvas>
+                        <img id="explore-image" src="" alt="Dataset sample" style="display: none;">
+                    </div>
+                    <div class="viewer-controls">
+                        <button id="prev-image" class="nav-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                        <span id="image-counter">0 / 0</span>
+                        <button id="next-image" class="nav-btn" disabled><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="viewer-sidebar">
+                    <h4>Annotations</h4>
+                    <div id="annotation-list" class="annotation-list">
+                        <p class="no-annotations">No image loaded</p>
+                    </div>
+                    <h4>Metadata</h4>
+                    <div id="image-metadata" class="metadata-panel">
+                        <div class="meta-item">
+                            <span class="meta-label">Video ID:</span>
+                            <span class="meta-value" id="meta-video">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Frame:</span>
+                            <span class="meta-value" id="meta-frame">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Action:</span>
+                            <span class="meta-value" id="meta-action">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Participant:</span>
+                            <span class="meta-value" id="meta-participant">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Gallery -->
+            <div class="explore-gallery">
+                <h4>Sample Gallery</h4>
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Placeholder thumbnails -->
+                    <div class="gallery-item placeholder">
+                        <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                    </div>
+                    <div class="gallery-item placeholder">
+                        <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                    </div>
+                    <div class="gallery-item placeholder">
+                        <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                    </div>
+                    <div class="gallery-item placeholder">
+                        <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                    </div>
+                    <div class="gallery-item placeholder">
+                        <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                    </div>
+                    <div class="gallery-item placeholder">
+                        <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
