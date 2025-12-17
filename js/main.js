@@ -345,10 +345,10 @@ function initHeroVideoCarousel() {
         nextVideo();
     });
     
-    // Change video every 4 seconds
+    // Change video every 3 seconds
     setInterval(function() {
         nextVideo();
-    }, 4000);
+    }, 3000);
     
     console.log('Hero video carousel initialized');
 }
@@ -524,7 +524,15 @@ function initExplorer() {
         annotations.forEach(anno => {
             const cat = categories[anno.category_id] || { name: 'unknown', color: '#E94560' };
             
-            if (annotationType === 'segmentation' && anno.segmentation && anno.segmentation.length > 0) {
+            if (annotationType === 'both') {
+                // Draw both segmentation and bounding box
+                if (anno.segmentation && anno.segmentation.length > 0) {
+                    drawSegmentation(ctx, anno.segmentation, cat, scaleX, scaleY);
+                }
+                if (anno.bbox && anno.bbox.length === 4) {
+                    drawBoundingBox(ctx, anno.bbox, cat, scaleX, scaleY);
+                }
+            } else if (annotationType === 'segmentation' && anno.segmentation && anno.segmentation.length > 0) {
                 drawSegmentation(ctx, anno.segmentation, cat, scaleX, scaleY);
             } else if (annotationType === 'bbox' && anno.bbox && anno.bbox.length === 4) {
                 drawBoundingBox(ctx, anno.bbox, cat, scaleX, scaleY);

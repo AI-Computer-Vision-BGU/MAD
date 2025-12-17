@@ -204,7 +204,7 @@ a:hover {
     min-height: 100%;
     width: auto;
     height: auto;
-    transform: translate(-50%, -50%) scale(0.85);
+    transform: translate(-50%, -50%);
     object-fit: cover;
     transition: opacity 1s ease-in-out;
     opacity: 1;
