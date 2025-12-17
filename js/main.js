@@ -596,8 +596,10 @@ function initExplorer() {
             return;
         }
         
-        annotationList.innerHTML = annotations.map(anno => {
-            const cat = categories[anno.category_id] || { name: 'unknown', color: '#E94560' };
+        // Get unique categories only
+        const uniqueCategories = [...new Set(annotations.map(anno => anno.category_id))];
+        annotationList.innerHTML = uniqueCategories.map(catId => {
+            const cat = categories[catId] || { name: 'unknown', color: '#E94560' };
             return `
                 <div class="annotation-item">
                     <span class="annotation-color" style="background-color: ${cat.color}"></span>
